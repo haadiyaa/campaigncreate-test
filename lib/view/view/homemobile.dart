@@ -17,12 +17,12 @@ class HomeMobile extends ConsumerWidget {
         child: Column(
           children: [
             SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: formSteps[currentStep].formWidget!),
-            AppConstants.height20,
-            SizedBox(
                 height: MediaQuery.of(context).size.height * 0.6,
                 child: const SidebarWidget()),
+            AppConstants.height20,
+            SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: formSteps[currentStep].formWidget!),
           ],
         ),
       ),
