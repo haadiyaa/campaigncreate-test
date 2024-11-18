@@ -1,5 +1,4 @@
 import 'package:campaign_creation_test/model/campaignformmodel/campaignformmodel.dart';
-import 'package:campaign_creation_test/viewmodel/slidebarviewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -22,8 +21,18 @@ class CampaignFormViewModel extends StateNotifier<CampaignFormModel> {
     if (box.isNotEmpty) {
       state = box.values.toList()[0];
     }
-    print('get $state');
     return state;
+  }
+
+  void resetForm() {
+    state = const CampaignFormModel(
+      subject: '',
+      previewText: '',
+      fromName: '',
+      fromEmail: '',
+      runOnce: false,
+      customAudience: false,
+    );
   }
 
   Future<void> saveDraft(CampaignFormModel model) async {

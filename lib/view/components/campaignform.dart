@@ -74,6 +74,7 @@ class CampaignForm extends ConsumerWidget {
               head: 'Preview text',
               text: 'Enter text here...',
               controller: preview,
+              maxLines: 3,
               validator: (p0) {
                 if (p0 == null || p0.isEmpty) {
                   return 'Enter something';
@@ -173,7 +174,8 @@ class CampaignForm extends ConsumerWidget {
                   'Custom audience',
                   style: Apptextstyle.textfieldHead,
                 ),
-                CustomSwitch(val: formData.customAudience,
+                CustomSwitch(
+                  val: formData.customAudience,
                   id: 'customAudience',
                   onChanged: (value) {
                     ref
@@ -217,10 +219,25 @@ class CampaignForm extends ConsumerWidget {
                     child: CustomOutLinedButton(
                       label: "Save Draft",
                       onTap: () {
-                        final formData = ref.read(campaignFormProvider);
-                        ref
-                            .read(campaignFormProvider.notifier)
-                            .saveDraft(formData);
+                        if (_key.currentState!.validate()) {
+                          final formData = ref.read(campaignFormProvider);
+                          ref
+                              .read(campaignFormProvider.notifier)
+                              .saveDraft(formData)
+                              .then(
+                            (value) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Draft saved.")),
+                              );
+                            },
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text(
+                                    "Please complete the required fields.")),
+                          );
+                        }
                       },
                     ),
                   ),
@@ -240,6 +257,12 @@ class CampaignForm extends ConsumerWidget {
                           ref
                               .read(sidebarProvider.notifier)
                               .navigateToStep(currentStep + 1);
+                          ref.read(campaignFormProvider.notifier).resetForm();
+                          // _key.currentState!.reset();
+                          // subject.clear();
+                          // preview.clear();
+                          // name.clear();
+                          // email.clear();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
