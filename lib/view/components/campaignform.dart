@@ -182,11 +182,15 @@ class CampaignForm extends ConsumerWidget {
             const Spacer(
               flex: 4,
             ),
-            const Row(
-              children: [
-                Text(
-                    'You can set up a custom domain or connect your email service provider to change this.'),
-              ],
+            Text.rich(
+              TextSpan(text: 'You can set up a ', children: [
+                TextSpan(
+                    text:
+                        'custom domain or connect your email service provider ',
+                    style: TextStyle(
+                        color: const Color.fromARGB(255, 183, 25, 8))),
+                TextSpan(text: 'to change this.'),
+              ]),
             ),
             const Spacer(
               flex: 4,
@@ -211,7 +215,8 @@ class CampaignForm extends ConsumerWidget {
                     height: 50,
                     child: CustomOutLinedButton(
                       label: "Save Draft",
-                      onTap: () => ref.read(campaignFormProvider.notifier).saveDraft(),
+                      onTap: () =>
+                          ref.read(campaignFormProvider.notifier).saveDraft(),
                     ),
                   ),
                 ),
