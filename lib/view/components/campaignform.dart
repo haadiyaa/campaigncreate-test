@@ -26,6 +26,12 @@ class CampaignForm extends ConsumerWidget {
     final formSteps = ref.watch(formStepsProvider);
     final currentStepDetails = formSteps[currentStep];
 
+    // ref.read(campaignFormProvider.notifier).getAllData();
+    final formData = ref.watch(campaignFormProvider);
+    subject.text = formData.subject;
+    preview.text = formData.previewText;
+    name.text = formData.fromName;
+    email.text = formData.fromEmail;
     return Container(
       decoration: BoxDecoration(
           color: AppColors.white, borderRadius: BorderRadius.circular(10)),
@@ -144,6 +150,7 @@ class CampaignForm extends ConsumerWidget {
                   style: Apptextstyle.textfieldHead,
                 ),
                 CustomSwitch(
+                  val: formData.runOnce,
                   id: 'runOnce',
                   onChanged: (value) {
                     ref
@@ -166,7 +173,7 @@ class CampaignForm extends ConsumerWidget {
                   'Custom audience',
                   style: Apptextstyle.textfieldHead,
                 ),
-                CustomSwitch(
+                CustomSwitch(val: formData.customAudience,
                   id: 'customAudience',
                   onChanged: (value) {
                     ref
@@ -182,7 +189,7 @@ class CampaignForm extends ConsumerWidget {
             const Spacer(
               flex: 4,
             ),
-            Text.rich(
+            const Text.rich(
               TextSpan(text: 'You can set up a ', children: [
                 TextSpan(
                     text:
@@ -201,12 +208,6 @@ class CampaignForm extends ConsumerWidget {
             const Spacer(
               flex: 2,
             ),
-            // TextField(
-            //   decoration: const InputDecoration(labelText: "Campaign Subject"),
-            //   onChanged: (value) =>
-            //       ref.read(formProvider.notifier).updateField('subject', value),
-            // ),
-            // AppConstants.height10,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -215,8 +216,12 @@ class CampaignForm extends ConsumerWidget {
                     height: 50,
                     child: CustomOutLinedButton(
                       label: "Save Draft",
-                      onTap: () =>
-                          ref.read(campaignFormProvider.notifier).saveDraft(),
+                      onTap: () {
+                        final formData = ref.read(campaignFormProvider);
+                        ref
+                            .read(campaignFormProvider.notifier)
+                            .saveDraft(formData);
+                      },
                     ),
                   ),
                 ),
@@ -229,11 +234,6 @@ class CampaignForm extends ConsumerWidget {
                     child: CustomButton(
                       label: "Next Step",
                       onTap: () {
-                        // if (ref.read(formProvider.notifier).validateForm()) {
-                        //   ref
-                        //       .read(sidebarProvider.notifier)
-                        //       .navigateToStep(currentStep + 1);
-                        // }
                         if (_key.currentState!.validate()) {
                           final formData = ref.read(campaignFormProvider);
                           print(formData.toJson());

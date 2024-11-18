@@ -1,8 +1,14 @@
+import 'package:campaign_creation_test/model/campaignformmodel/campaignformmodel.dart';
 import 'package:campaign_creation_test/view/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(CampaignFormModelAdapter());
+  await Hive.openBox<CampaignFormModel>('hivebox');
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -15,10 +21,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // theme: ThemeData(fontFamily: 'Poppins',),
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: HomeScreen(),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:campaign_creation_test/model/campaignformmodel/campaignformmodel.dart';
+import 'package:campaign_creation_test/viewmodel/slidebarviewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class CampaignFormViewModel extends StateNotifier<CampaignFormModel> {
   CampaignFormViewModel()
@@ -12,9 +14,23 @@ class CampaignFormViewModel extends StateNotifier<CampaignFormModel> {
             runOnce: false,
             customAudience: false,
           ),
-        );
+        ) {
+    getAllData();
+  }
+  CampaignFormModel? getAllData() {
+    Box<CampaignFormModel> box = Hive.box<CampaignFormModel>('hivebox');
+    if (box.isNotEmpty) {
+      state = box.values.toList()[0];
+    }
+    print('get $state');
+    return state;
+  }
 
-  void saveDraft() {
+  Future<void> saveDraft(CampaignFormModel model) async {
+    Box<CampaignFormModel> box = Hive.box<CampaignFormModel>('hivebox');
+    await box.clear();
+    await box.add(model);
+    getAllData();
     print("Draft saved: $state");
   }
 

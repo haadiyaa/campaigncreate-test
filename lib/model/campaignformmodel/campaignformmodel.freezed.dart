@@ -20,11 +20,17 @@ CampaignFormModel _$CampaignFormModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CampaignFormModel {
+  @HiveField(0)
   String get subject => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get previewText => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get fromName => throw _privateConstructorUsedError;
+  @HiveField(3)
   String get fromEmail => throw _privateConstructorUsedError;
+  @HiveField(4)
   bool get runOnce => throw _privateConstructorUsedError;
+  @HiveField(5)
   bool get customAudience => throw _privateConstructorUsedError;
 
   /// Serializes this CampaignFormModel to a JSON map.
@@ -44,12 +50,12 @@ abstract class $CampaignFormModelCopyWith<$Res> {
       _$CampaignFormModelCopyWithImpl<$Res, CampaignFormModel>;
   @useResult
   $Res call(
-      {String subject,
-      String previewText,
-      String fromName,
-      String fromEmail,
-      bool runOnce,
-      bool customAudience});
+      {@HiveField(0) String subject,
+      @HiveField(1) String previewText,
+      @HiveField(2) String fromName,
+      @HiveField(3) String fromEmail,
+      @HiveField(4) bool runOnce,
+      @HiveField(5) bool customAudience});
 }
 
 /// @nodoc
@@ -112,12 +118,12 @@ abstract class _$$CampaignFormModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String subject,
-      String previewText,
-      String fromName,
-      String fromEmail,
-      bool runOnce,
-      bool customAudience});
+      {@HiveField(0) String subject,
+      @HiveField(1) String previewText,
+      @HiveField(2) String fromName,
+      @HiveField(3) String fromEmail,
+      @HiveField(4) bool runOnce,
+      @HiveField(5) bool customAudience});
 }
 
 /// @nodoc
@@ -173,27 +179,33 @@ class __$$CampaignFormModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CampaignFormModelImpl implements _CampaignFormModel {
   const _$CampaignFormModelImpl(
-      {required this.subject,
-      required this.previewText,
-      required this.fromName,
-      required this.fromEmail,
-      required this.runOnce,
-      required this.customAudience});
+      {@HiveField(0) required this.subject,
+      @HiveField(1) required this.previewText,
+      @HiveField(2) required this.fromName,
+      @HiveField(3) required this.fromEmail,
+      @HiveField(4) required this.runOnce,
+      @HiveField(5) required this.customAudience});
 
   factory _$CampaignFormModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CampaignFormModelImplFromJson(json);
 
   @override
+  @HiveField(0)
   final String subject;
   @override
+  @HiveField(1)
   final String previewText;
   @override
+  @HiveField(2)
   final String fromName;
   @override
+  @HiveField(3)
   final String fromEmail;
   @override
+  @HiveField(4)
   final bool runOnce;
   @override
+  @HiveField(5)
   final bool customAudience;
 
   @override
@@ -242,27 +254,34 @@ class _$CampaignFormModelImpl implements _CampaignFormModel {
 
 abstract class _CampaignFormModel implements CampaignFormModel {
   const factory _CampaignFormModel(
-      {required final String subject,
-      required final String previewText,
-      required final String fromName,
-      required final String fromEmail,
-      required final bool runOnce,
-      required final bool customAudience}) = _$CampaignFormModelImpl;
+          {@HiveField(0) required final String subject,
+          @HiveField(1) required final String previewText,
+          @HiveField(2) required final String fromName,
+          @HiveField(3) required final String fromEmail,
+          @HiveField(4) required final bool runOnce,
+          @HiveField(5) required final bool customAudience}) =
+      _$CampaignFormModelImpl;
 
   factory _CampaignFormModel.fromJson(Map<String, dynamic> json) =
       _$CampaignFormModelImpl.fromJson;
 
   @override
+  @HiveField(0)
   String get subject;
   @override
+  @HiveField(1)
   String get previewText;
   @override
+  @HiveField(2)
   String get fromName;
   @override
+  @HiveField(3)
   String get fromEmail;
   @override
+  @HiveField(4)
   bool get runOnce;
   @override
+  @HiveField(5)
   bool get customAudience;
 
   /// Create a copy of CampaignFormModel

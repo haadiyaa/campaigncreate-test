@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CustomSwitch extends ConsumerWidget {
-  const CustomSwitch({super.key, required this.id, this.onChanged});
+  const CustomSwitch({super.key, required this.id, this.onChanged,this.val});
 
   final String id;
+  final bool? val;
   final void Function(bool)? onChanged;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +20,7 @@ class CustomSwitch extends ConsumerWidget {
         activeColor: AppColors.white,
         inactiveThumbColor: AppColors.grey,
         inactiveTrackColor: const Color.fromARGB(255, 211, 211, 211),
-        value: isSwitchOn,
+        value:val?? isSwitchOn,
         onChanged: onChanged,
         );
   }
