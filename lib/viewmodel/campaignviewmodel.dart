@@ -43,6 +43,11 @@ class CampaignFormViewModel extends StateNotifier<CampaignFormModel> {
     print("Draft saved: $state");
   }
 
+  // Future<void> cleare() async {
+  //   Box<CampaignFormModel> box = Hive.box<CampaignFormModel>('hivebox');
+  //   await box.clear();
+  // }
+
   void updateField(String field, dynamic value) {
     state = CampaignFormModel(
       subject: field == 'subject' ? value : state.subject,

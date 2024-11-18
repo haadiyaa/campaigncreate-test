@@ -67,6 +67,11 @@ class CampaignForm extends ConsumerWidget {
                     .updateField('subject', value);
               },
             ),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       ref.read(campaignFormProvider.notifier).cleare();
+            //     },
+            //     child: Text('data')),
             const Spacer(
               flex: 4,
             ),
@@ -253,10 +258,15 @@ class CampaignForm extends ConsumerWidget {
                       onTap: () {
                         if (_key.currentState!.validate()) {
                           final formData = ref.read(campaignFormProvider);
+                          final steps = ref.watch(formStepsProvider);
+
                           print(formData.toJson());
-                          ref
-                              .read(sidebarProvider.notifier)
-                              .navigateToStep(currentStep + 1);
+                          if (currentStep != steps.length - 1) {
+                            ref
+                                .read(sidebarProvider.notifier)
+                                .navigateToStep(currentStep + 1);
+                          }
+
                           ref.read(campaignFormProvider.notifier).resetForm();
                           // _key.currentState!.reset();
                           // subject.clear();
