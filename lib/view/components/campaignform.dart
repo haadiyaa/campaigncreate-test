@@ -3,9 +3,11 @@ import 'package:campaign_creation_test/utils/appconstants.dart';
 import 'package:campaign_creation_test/utils/apptextstyle.dart';
 import 'package:campaign_creation_test/view/components/custombutton.dart';
 import 'package:campaign_creation_test/view/components/customoutlinedbutton.dart';
+import 'package:campaign_creation_test/view/components/customswitch.dart';
 import 'package:campaign_creation_test/view/components/customtextfield.dart';
-import 'package:campaign_creation_test/viewmodel/formviewmodel.dart';
+import 'package:campaign_creation_test/viewmodel/campaignviewmodel.dart';
 import 'package:campaign_creation_test/viewmodel/slidebarviewmodel.dart';
+import 'package:campaign_creation_test/viewmodel/switchviewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,7 +22,6 @@ class CampaignForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formState = ref.watch(formProvider);
     final currentStep = ref.watch(sidebarProvider);
     final formSteps = ref.watch(formStepsProvider);
     final currentStepDetails = formSteps[currentStep];
@@ -54,6 +55,11 @@ class CampaignForm extends ConsumerWidget {
                   return 'Enter something';
                 }
               },
+              onChanged: (value) {
+                ref
+                    .read(campaignFormProvider.notifier)
+                    .updateField('subject', value);
+              },
             ),
             const Spacer(
               flex: 4,
@@ -66,6 +72,11 @@ class CampaignForm extends ConsumerWidget {
                 if (p0 == null || p0.isEmpty) {
                   return 'Enter something';
                 }
+              },
+              onChanged: (value) {
+                ref
+                    .read(campaignFormProvider.notifier)
+                    .updateField('previewText', value);
               },
             ),
             const Spacer(),
@@ -89,6 +100,11 @@ class CampaignForm extends ConsumerWidget {
                         return 'Enter something';
                       }
                     },
+                    onChanged: (value) {
+                      ref
+                          .read(campaignFormProvider.notifier)
+                          .updateField('fromName', value);
+                    },
                   ),
                 ),
                 AppConstants.width20,
@@ -96,11 +112,16 @@ class CampaignForm extends ConsumerWidget {
                   child: CustomTextField(
                     head: '"From" Email',
                     text: 'Anne@example.com',
-                    controller: subject,
+                    controller: email,
                     validator: (p0) {
                       if (p0 == null || p0.isEmpty) {
                         return 'Enter something';
                       }
+                    },
+                    onChanged: (value) {
+                      ref
+                          .read(campaignFormProvider.notifier)
+                          .updateField('fromEmail', value);
                     },
                   ),
                 ),
@@ -122,9 +143,16 @@ class CampaignForm extends ConsumerWidget {
                   'Run only once per customer',
                   style: Apptextstyle.textfieldHead,
                 ),
-                Switch(
-                  value: true,
-                  onChanged: (value) {},
+                CustomSwitch(
+                  id: 'runOnce',
+                  onChanged: (value) {
+                    ref
+                        .read(switchProviderFamily('runOnce').notifier)
+                        .toggleSwitch(value);
+                    ref
+                        .read(campaignFormProvider.notifier)
+                        .updateField('runOnce', value);
+                  },
                 ),
               ],
             ),
@@ -138,9 +166,16 @@ class CampaignForm extends ConsumerWidget {
                   'Custom audience',
                   style: Apptextstyle.textfieldHead,
                 ),
-                Switch(
-                  value: false,
-                  onChanged: (value) {},
+                CustomSwitch(
+                  id: 'customAudience',
+                  onChanged: (value) {
+                    ref
+                        .read(switchProviderFamily('customAudience').notifier)
+                        .toggleSwitch(value);
+                    ref
+                        .read(campaignFormProvider.notifier)
+                        .updateField('customAudience', value);
+                  },
                 ),
               ],
             ),
@@ -176,7 +211,7 @@ class CampaignForm extends ConsumerWidget {
                     height: 50,
                     child: CustomOutLinedButton(
                       label: "Save Draft",
-                      onTap: () => ref.read(formProvider.notifier).saveDraft(),
+                      onTap: () => ref.read(campaignFormProvider.notifier).saveDraft(),
                     ),
                   ),
                 ),
@@ -195,6 +230,8 @@ class CampaignForm extends ConsumerWidget {
                         //       .navigateToStep(currentStep + 1);
                         // }
                         if (_key.currentState!.validate()) {
+                          final formData = ref.read(campaignFormProvider);
+                          print(formData.toJson());
                           ref
                               .read(sidebarProvider.notifier)
                               .navigateToStep(currentStep + 1);

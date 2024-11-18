@@ -12,10 +12,12 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     this.keyboardType,
     this.onTap,
+    this.onChanged,
   });
 
   final String text;
   final String head;
+  final Function(String)? onChanged;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
@@ -33,6 +35,7 @@ class CustomTextField extends StatelessWidget {
           ),
           AppConstants.height5,
           TextFormField(
+            onChanged: onChanged,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             textInputAction: TextInputAction.next,
             onTap: onTap,

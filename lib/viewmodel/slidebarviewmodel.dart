@@ -1,4 +1,4 @@
-import 'package:campaign_creation_test/model/formstepsmodel.dart';
+import 'package:campaign_creation_test/model/formstepsmodel/formstepsmodel.dart';
 import 'package:campaign_creation_test/view/components/campaignform.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
