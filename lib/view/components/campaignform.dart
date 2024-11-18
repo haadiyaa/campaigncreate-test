@@ -56,9 +56,16 @@ class CampaignForm extends ConsumerWidget {
               head: 'Campaign Subject',
               text: 'Enter Subject',
               controller: subject,
-              validator: (p0) {
-                if (p0 == null || p0.isEmpty) {
-                  return 'Enter something';
+              validator: (value) {
+                final name = RegExp(r'^[A-Za-z\s]+$');
+                if (value!.isEmpty) {
+                  return 'Subject name can\'t be empty';
+                } else if (!name.hasMatch(value)) {
+                  return "Enter a valid subject";
+                } else if (value.length < 3) {
+                  return 'Subject should be atleast 3 characters long';
+                } else {
+                  return null;
                 }
               },
               onChanged: (value) {
@@ -67,11 +74,6 @@ class CampaignForm extends ConsumerWidget {
                     .updateField('subject', value);
               },
             ),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       ref.read(campaignFormProvider.notifier).cleare();
-            //     },
-            //     child: Text('data')),
             const Spacer(
               flex: 4,
             ),
@@ -80,9 +82,16 @@ class CampaignForm extends ConsumerWidget {
               text: 'Enter text here...',
               controller: preview,
               maxLines: 3,
-              validator: (p0) {
-                if (p0 == null || p0.isEmpty) {
-                  return 'Enter something';
+              validator: (value) {
+                final name = RegExp(r'^[A-Za-z\s]+$');
+                if (value!.isEmpty) {
+                  return 'preview can\'t be empty';
+                } else if (!name.hasMatch(value)) {
+                  return "Enter a valid priview";
+                } else if (value.length < 7) {
+                  return 'Name should be atleast 6 characters long';
+                } else {
+                  return null;
                 }
               },
               onChanged: (value) {
@@ -107,9 +116,16 @@ class CampaignForm extends ConsumerWidget {
                     head: '"From" Name',
                     text: 'From Anne',
                     controller: name,
-                    validator: (p0) {
-                      if (p0 == null || p0.isEmpty) {
-                        return 'Enter something';
+                    validator: (value) {
+                      final name = RegExp(r'^[A-Za-z\s]+$');
+                      if (value!.isEmpty) {
+                        return 'Name can\'t be empty';
+                      } else if (!name.hasMatch(value)) {
+                        return "Enter a valid name";
+                      } else if (value.length < 3) {
+                        return 'Name should be atleast 3 characters long';
+                      } else {
+                        return null;
                       }
                     },
                     onChanged: (value) {
@@ -125,10 +141,16 @@ class CampaignForm extends ConsumerWidget {
                     head: '"From" Email',
                     text: 'Anne@example.com',
                     controller: email,
-                    validator: (p0) {
-                      if (p0 == null || p0.isEmpty) {
-                        return 'Enter something';
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Email is required";
                       }
+                      final emailReg = RegExp(
+                          r"^[a-zA-Z0-9_\-\.\S]{4,}[@][a-z]+[\.][a-z]{2,3}[\s]*$");
+                      if (!emailReg.hasMatch(value)) {
+                        return 'Invalid email address!';
+                      }
+                      return null;
                     },
                     onChanged: (value) {
                       ref
